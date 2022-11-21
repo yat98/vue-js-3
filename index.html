@@ -16,11 +16,11 @@
         <!-- <input type="text" v-model="subject"> -->
         <h3>Learn {{ subject }}</h3>
         <!-- <ol v-if="status"> -->
-        <ol v-show="status" class="list" :class="{active: isActive, 'box-shadow': true}">
+        <!-- <ol v-show="status" class="list" :class="{active: isActive, 'box-shadow': true}">
             <li v-for="item in subjects" :key="item.title">
                 {{ item.title }} &mdash; {{ item.type }} Type
             </li>
-        </ol>
+        </ol> -->
 
         <!-- <p v-else>
             No subjects yet
@@ -30,7 +30,14 @@
         <!-- <button @click="makeItFun">Make it Fun</button> -->
         <!-- <button v-on:click="check">Check</button> -->
         <!-- <p>Score: {{ score }}</p> -->
-        <button v-on:click="activate">Activate</button>
+        <!-- <button v-on:click="activate">Activate</button> -->
+
+        <input type="text" v-model="name">
+        <input type="text" v-model="age">
+        <p>
+            Name {{ name }}, Age {{ age }}, {{ expression }}!
+        </p>
+
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
@@ -52,21 +59,34 @@
                     this.isActive = !this.isActive
                 }
             },
+            computed: {
+                expression() {
+                    console.log('from computed')
+                    if(this.age > 50)
+                        return 'too old'
+                    else
+                        return 'too young'
+                }
+            },
             data() {
+                console.log('from data()')
                 return {
                     subject: 'Vue.JS',
-                    subjects: [
-                        { title: 'JavaScript', type: 'Native' },
-                        { title: 'Vue', type: 'Framework' },
-                        { title: 'React', type: 'Framework' },
-                    ],
-                    isActive: false,
-                    status: true,
+                    name: 'Hidayat',
+                    age: 100,
+                    // subjects: [
+                    //     { title: 'JavaScript', type: 'Native' },
+                    //     { title: 'Vue', type: 'Framework' },
+                    //     { title: 'React', type: 'Framework' },
+                    // ],
+                    // isActive: false,
+                    // status: true,
                     // score: 0,
                     // number: 0
                 }
             },
             mounted() {
+                console.log('from mounted()')
                 // setInterval(() => {
                 //     this.number++
                 // }, 500)
