@@ -8,9 +8,13 @@
 </head>
 <body>
     <div id="vueApp">
+        <input type="text" v-model="subject">
         <h3>Learn {{ subject }}</h3>
         <!-- <p>Number: {{ number }}</p> -->
-        <button @click="makeItFun">Make it Fun</button>
+        <button v-on:click="makeItFun">Make it Fun</button>
+        <!-- <button @click="makeItFun">Make it Fun</button> -->
+        <button v-on:click="check">Check</button>
+        <p>Score: {{ score }}</p>
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
@@ -20,11 +24,19 @@
             methods: {
                 makeItFun() {
                     this.subject = `${this.subject} !!!!!`
+                },
+                check() {
+                    if(this.subject === 'VueJS'){
+                        this.score = 100
+                    }else{
+                        this.score = -50                 
+                    }
                 }
             },
             data() {
                 return {
                     subject: 'Vue.JS',
+                    score: 0,
                     // number: 0
                 }
             },
