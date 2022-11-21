@@ -9,23 +9,29 @@
 <body>
     <div id="vueApp">
         <h3>Learn {{ subject }}</h3>
-        <p>Number: {{ number }}</p>
+        <!-- <p>Number: {{ number }}</p> -->
+        <button @click="makeItFun">Make it Fun</button>
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
         const { createApp } = Vue
 
         const sample = {
+            methods: {
+                makeItFun() {
+                    this.subject = `${this.subject} !!!!!`
+                }
+            },
             data() {
                 return {
                     subject: 'Vue.JS',
-                    number: 0
+                    // number: 0
                 }
             },
             mounted() {
-                setInterval(() => {
-                    this.number++
-                }, 500)
+                // setInterval(() => {
+                //     this.number++
+                // }, 500)
             }
         }
 
