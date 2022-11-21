@@ -5,13 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learn Vue.JS</title>
+    <style>
+        .active{
+            color: blue;
+        }
+    </style>
 </head>
 <body>
     <div id="vueApp">
         <!-- <input type="text" v-model="subject"> -->
         <h3>Learn {{ subject }}</h3>
         <!-- <ol v-if="status"> -->
-        <ol v-show="status">
+        <ol v-show="status" class="list" :class="{active: isActive, 'box-shadow': true}">
             <li v-for="item in subjects" :key="item.title">
                 {{ item.title }} &mdash; {{ item.type }} Type
             </li>
@@ -25,6 +30,7 @@
         <!-- <button @click="makeItFun">Make it Fun</button> -->
         <!-- <button v-on:click="check">Check</button> -->
         <!-- <p>Score: {{ score }}</p> -->
+        <button v-on:click="activate">Activate</button>
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
@@ -41,6 +47,9 @@
                     }else{
                         this.score = -50                 
                     }
+                },
+                activate() {
+                    this.isActive = !this.isActive
                 }
             },
             data() {
@@ -51,7 +60,8 @@
                         { title: 'Vue', type: 'Framework' },
                         { title: 'React', type: 'Framework' },
                     ],
-                    status: false,
+                    isActive: false,
+                    status: true,
                     // score: 0,
                     // number: 0
                 }
