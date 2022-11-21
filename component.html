@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Vue</title>
+</head>
+<body>
+    <div id="vueApp">
+        <h1>Learn Vue JS</h1>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <hr>
+        <blog-post title="Lorem Ipsum" desc="This is first blog" @done="done" id="1"></blog-post>
+        <blog-post title="Ipsum Lorem" desc="This is second blog" @done="done" id="2"></blog-post>
+        <blog-post title="Sit Dolor" desc="This is third blog" @done="done" id="3"></blog-post>
+        <blog-post title="Dolor Ipsum" desc="This is fourth blog" @done="done" id="4"></blog-post>
+        <p>Total: {{ total }}</p>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script type="text/x-template" id="blog-template">
+        <h3>{{ title }}</h3>
+        <p>{{ desc }}</p>
+        <button @click="$emit('done',id)">Selesai</button>
+    </script>
+
+    <script>
+        const { createApp } = Vue
+        const app = createApp({
+            methods: {
+                done(number) {
+                    this.total = this.total + parseInt(number)
+                },
+            },
+            data() {
+                return {
+                    total: 0
+                }
+            }
+        })
+
+        app.component('button-counter', {
+            data() {
+                return {
+                    count: 0
+                }
+            },
+            template: `
+                <button v-on:click="count++">
+                    You clicked me {{ count }} times.
+                </button>
+            `,
+        })
+
+        app.component('blog-post', {
+            props: ['title','desc','id'],
+            template: '#blog-template'
+        })
+        
+        app.mount('#vueApp')
+    </script>
+</body>
+</html>
