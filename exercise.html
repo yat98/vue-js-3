@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn VueJS</title>
+    <style>
+        body{
+            font-family: sans-serif;
+            width: 80%;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .box{
+            padding: 10px;
+            background: rgb(213,213,213);
+            border-radius: 10px;
+            margin: 10px;
+        }
+
+        .completed{
+            background-color: rgb(205,255,213);
+        }
+    </style>
+</head>
+<body>
+    <div id="vueApp">
+        <h1>Lessons</h1>
+        <p>Complete Lessons: {{ completedLessons }}</p>
+        <button @click="showForm = !showForm">Toggle Button</button>
+
+        <div v-show="showForm">
+            <h2>Add Lesson</h2>
+            <form @submit.prevent="addLesson">
+                <p>
+                    <input type="text" name="title" placeholder="Title">
+                </p>
+                <p>
+                    <input type="text" name="description" placeholder="Description">
+                </p>
+                <p>
+                    <input type="text" name="image" placeholder="Image">
+                </p>
+                <p>
+                    <input type="submit" value="Add Lesson">
+                </p>
+            </form>
+        </div>
+
+        <div v-for="item in lessons" class="box" :class="{completed: item.state}">
+            <h2>{{ item.title }}</h2>
+            <p>{{ item.description }}</p>
+            <img :src="`img/${item.img}`" width="70">
+            <input type="checkbox" :checked="item.state" @change="item.state = !item.state">
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue
+        const app = createApp({
+            data() {
+                return {
+                    showForm: false,
+                    done: 0,
+                    lessons: [
+                        { title: 'Vue JS', description: 'Lorem ipsum sit dolor', img: 'vue.png', state: false },
+                        { title: 'React JS', description: 'Lorem ipsum sit dolor', img: 'react.png', state: false },
+                    ]
+                }
+            },
+            computed: {
+                completedLessons() {
+                    return this.lessons.filter((lesson) => lesson.state == true).length
+                }
+            },
+            methods: {
+                addLesson(e) {
+                    const el = e.target.elements
+
+                    const title = el.title.value
+                    const description = el.description.value
+                    const img = el.image.value
+
+                    this.lessons.push({
+                        title: title,
+                        description: description,
+                        img: img,
+                        state: false,
+                    })
+
+                    el.title.value =  ''
+                    el.description.value =  ''
+                    el.image.value =  ''
+                    
+                    this.showForm = false
+                }
+            }
+        })
+
+
+        app.mount('#vueApp')
+    </script>
+</body>
+</html>
